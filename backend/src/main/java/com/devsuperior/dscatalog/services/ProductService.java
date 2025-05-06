@@ -22,6 +22,7 @@ import com.devsuperior.dscatalog.repositories.CategoryRepository;
 import com.devsuperior.dscatalog.repositories.ProductRepository;
 import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
 import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
+import com.devsuperior.dscatalog.util.Utils;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -96,6 +97,7 @@ public class ProductService {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public Page<ProductDTO> findAllPaged(String name, String categoryId, Pageable pageable) {
 
 		List<Long> categoryIds = Arrays.asList();
@@ -112,6 +114,7 @@ public class ProductService {
 
 		List<Product> products = repository.searchProductsWithCategories(productIds);
 
+		products = (List<Product>) Utils.replace(page.getContent(), products);
 		List<ProductDTO> result = products.stream().map(x -> new ProductDTO(x, x.getCategories())).toList();
 
 		return new PageImpl<>(result, pageable, page.getTotalElements());
