@@ -1,5 +1,6 @@
 package com.devsuperior.dscatalog.services;
 
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -12,9 +13,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.devsuperior.dscatalog.dto.CategoryDTO;
 import com.devsuperior.dscatalog.dto.ProductDTO;
+import com.devsuperior.dscatalog.dto.UriDTO;
 import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.entities.Product;
 import com.devsuperior.dscatalog.projections.ProductProjection;
@@ -34,6 +37,9 @@ public class ProductService {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
+
+	@Autowired
+	private S3Service s3Servvice;
 
 	@Transactional(readOnly = true)
 	public Page<ProductDTO> findAll(Pageable pageable) {
@@ -119,6 +125,12 @@ public class ProductService {
 
 		return new PageImpl<>(result, pageable, page.getTotalElements());
 
+	}
+
+	public UriDTO uploadFile(MultipartFile file) {
+		URL url = s3Servvice.uploadFile(file);
+
+		return new UriDTO(url.toString());
 	}
 
 }
