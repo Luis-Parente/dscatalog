@@ -46,7 +46,7 @@ spring.profiles.active=
 
 - You can also override it in the command line:
 ````bash
-mvn spring-boot:run -Dspring-boot.run.profiles=target-profile
+./mvn spring-boot:run -Dspring-boot.run.profiles=target-profile
 ````
 
 ### PostgreSQL Configuration (application-dev.properties)
