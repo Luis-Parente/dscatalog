@@ -70,10 +70,10 @@ spring.jpa.show-sql=true
 ## 🔍 Testing the API
 You can test the API in two ways:
 
-### 1.Swagger UI
+### Swagger UI
 Accessible at http://localhost:8080/swagger-ui/index.html. It provides a full list of available endpoints with detailed request/response schemas and example payloads.
 
-### 2.Postman
+### Postman
 Use Postman for a more flexible API testing experience.
 
 The repository includes:
