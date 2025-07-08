@@ -23,6 +23,9 @@ import com.devsuperior.dscatalog.dto.ProductDTO;
 import com.devsuperior.dscatalog.dto.UriDTO;
 import com.devsuperior.dscatalog.services.ProductService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 @RestController
@@ -32,43 +35,78 @@ public class ProductResource {
 	@Autowired
 	private ProductService service;
 
-	@GetMapping
+	@Operation(description = "Get all products paged", summary = "Paged all products", responses = {
+			@ApiResponse(description = "Ok", responseCode = "200"), })
+	@GetMapping(produces = "application/json")
 	public ResponseEntity<Page<ProductDTO>> findAll(@RequestParam(defaultValue = "") String name,
 			@RequestParam(defaultValue = "0") String categoryId, Pageable pageable) {
 		Page<ProductDTO> list = service.findAllPaged(name, categoryId, pageable);
 		return ResponseEntity.ok().body(list);
 	}
 
-	@GetMapping(value = "/{id}")
+	@Operation(description = "Get product by id", summary = "Get product by id", responses = {
+			@ApiResponse(description = "Ok", responseCode = "200"),
+			@ApiResponse(description = "Not Found", responseCode = "404"), })
+	@GetMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
 		ProductDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);
 	}
 
+	@Operation(description = "Create a new product", summary = "Create a new product", responses = {
+			@ApiResponse(description = "Created", responseCode = "201"),
+			@ApiResponse(description = "Bad Request", responseCode = "400"),
+			@ApiResponse(description = "Unauthorized", responseCode = "401"),
+			@ApiResponse(description = "Forbidden", responseCode = "403"),
+			@ApiResponse(description = "Unprocessable Entity", responseCode = "422") })
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
-	@PostMapping
+	@SecurityRequirement(name = "bearerAuth")
+	@PostMapping(produces = "application/json")
 	public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto) {
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
 
+	@Operation(description = "Upload image", summary = "Upload image", responses = {
+			@ApiResponse(description = "Created", responseCode = "201"),
+			@ApiResponse(description = "Bad Request", responseCode = "400"),
+			@ApiResponse(description = "Unauthorized", responseCode = "401"),
+			@ApiResponse(description = "Forbidden", responseCode = "403"),
+			@ApiResponse(description = "Unprocessable Entity", responseCode = "422") })
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
-	@PostMapping(value = "/image")
+	@SecurityRequirement(name = "bearerAuth")
+	@PostMapping(value = "/image", produces = "application/json")
 	public ResponseEntity<UriDTO> uploadImage(@RequestParam("file") MultipartFile file) {
 		UriDTO dto = service.uploadFile(file);
 		return ResponseEntity.ok().body(dto);
 	}
-
+	
+	@Operation(description = "Update a product", summary = "Update a product", responses = {
+			@ApiResponse(description = "Ok", responseCode = "200"),
+			@ApiResponse(description = "Bad Request", responseCode = "400"),
+			@ApiResponse(description = "Unauthorized", responseCode = "401"),
+			@ApiResponse(description = "Forbidden", responseCode = "403"),
+			@ApiResponse(description = "Not Found", responseCode = "404"),
+			@ApiResponse(description = "Unprocessable Entity", responseCode = "422") })
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
-	@PutMapping(value = "/{id}")
+	@SecurityRequirement(name = "bearerAuth")
+	@PutMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<ProductDTO> update(@PathVariable Long id, @Valid @RequestBody ProductDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}
 
+	@Operation(description = "Delete a product", summary = "Delete a product", responses = {
+			@ApiResponse(description = "Sucess", responseCode = "204"),
+			@ApiResponse(description = "Bad Request", responseCode = "400"),
+			@ApiResponse(description = "Unauthorized", responseCode = "401"),
+			@ApiResponse(description = "Forbidden", responseCode = "403"),
+			@ApiResponse(description = "Not Found", responseCode = "404"),
+			@ApiResponse(description = "Unprocessable Entity", responseCode = "422") })
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
-	@DeleteMapping(value = "/{id}")
+	@SecurityRequirement(name = "bearerAuth")
+	@DeleteMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();

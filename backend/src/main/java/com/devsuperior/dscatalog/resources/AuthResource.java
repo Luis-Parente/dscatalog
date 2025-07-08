@@ -12,6 +12,8 @@ import com.devsuperior.dscatalog.dto.EmailDTO;
 import com.devsuperior.dscatalog.dto.NewPasswordDTO;
 import com.devsuperior.dscatalog.services.AuthService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 
 @RestController
@@ -21,13 +23,18 @@ public class AuthResource {
 	@Autowired
 	private AuthService service;
 
-	@PostMapping(value = "/recover-token")
+	@Operation(description = "Generate recover token", summary = "Send recover token to email", responses = {
+			@ApiResponse(description = "Ok", responseCode = "200"), })
+	@PostMapping(value = "/recover-token", produces = "application/json")
 	public ResponseEntity<Void> createRecoverToken(@Valid @RequestBody EmailDTO body) {
 		service.createRecoverToken(body);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PutMapping(value = "/new-password")
+	@Operation(description = "Save new password", summary = "Save new password", responses = {
+			@ApiResponse(description = "Ok", responseCode = "200"),
+			@ApiResponse(description = "Forbidden", responseCode = "403"),})
+	@PutMapping(value = "/new-password", produces = "application/json")
 	public ResponseEntity<Void> saveNewPassword(@Valid @RequestBody NewPasswordDTO body) {
 		service.saveNewPassword(body);
 		return ResponseEntity.noContent().build();
