@@ -11,7 +11,7 @@ A RESTful API for product catalog management, built with Java and Spring Boot. I
 - PostgreSQL (dev) and H2 (test) profiles
 - RESTful architecture with Spring Boot
 - Layered architecture (Controller, Service, Repository)
-- 
+  
 ## ✅ Requirements
 - Java 21+
 - Git
@@ -72,4 +72,34 @@ spring.jpa.show-sql=true
 ````
 - To access the H2 web console: http://localhost:8080/h2-console
 
-## ▶️ Start the Application
+## 🔍 Testing the API
+You can test the API in two ways:
+
+### 1.Swagger UI
+Accessible at http://localhost:8080/swagger-ui/index.html. It provides a full list of available endpoints with detailed request/response schemas and example payloads.
+
+### 2.Postman
+Use Postman for a more flexible API testing experience.
+
+The repository includes:
+
+- A Postman collection (dscatalog.postman_collection.json)
+
+- A Postman environment file (dscatalog.postman_environment.json)
+
+💾 Import both files into Postman to get started immediately:
+
+- Go to File > Import
+- Select the .json files from the repository
+- Use the environment to auto-fill base URLs and variables
+- You can then send requests directly using the pre-configured endpoints and data.
+
+## 🧰 Tech Stack
+- Java 21+
+- Spring Boot
+- Maven
+- Spring Security
+- PostgreSQL (or H2 for dev/test)
+- Swagger (OpenAPI)
+- Postman (for API testing)
+- JPA/Hibernate
