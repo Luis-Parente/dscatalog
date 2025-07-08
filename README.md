@@ -44,11 +44,6 @@ spring.profiles.active=
 ````
 - Set the active profile to dev for PostgreSQL, or to test for H2 (in-memory) usage.
 
-- You can also override it in the command line:
-````bash
-./mvn spring-boot:run -Dspring-boot.run.profiles=target-profile
-````
-
 ### PostgreSQL Configuration (application-dev.properties)
 - Make sure PostgreSQL is running and the database dscatalog exists. Then configure:
 ````properties
