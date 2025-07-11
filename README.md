@@ -22,7 +22,7 @@ A RESTful API for product catalog management, built with Java and Spring Boot. I
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/your-username/dscatalog.git
+git clone https://github.com/Luis-Parente/dscatalog
 cd dscatalog/backend
 ````
 ### Build the project using the Maven Wrapper:
