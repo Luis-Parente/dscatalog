@@ -25,10 +25,12 @@ import com.devsuperior.dscatalog.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/users")
+@Tag(name = "Users", description = "Resource for Users")
 public class UserResource {
 
 	@Autowired

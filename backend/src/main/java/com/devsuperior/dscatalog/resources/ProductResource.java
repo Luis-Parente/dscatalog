@@ -26,10 +26,12 @@ import com.devsuperior.dscatalog.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/products")
+@Tag(name = "Products", description = "Resource for Products")
 public class ProductResource {
 
 	@Autowired
