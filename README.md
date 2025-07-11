@@ -25,7 +25,7 @@ A RESTful API for product catalog management, built with Java and Spring Boot. I
 git clone https://github.com/Luis-Parente/dscatalog
 cd dscatalog/backend
 ````
-### Build the project using the Maven Wrapper:
+### Build the project:
 ```bash
 ./mvnw clean install
 ````
